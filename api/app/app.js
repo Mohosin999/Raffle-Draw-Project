@@ -1,18 +1,14 @@
-require("dotenv").config({ path: "/custom/path/to/.env" });
 // require("dotenv").config("../.env");
+require("dotenv").config({ path: "/custom/path/to/.env" });
 const express = require("express");
-const morgan = require("morgan");
-const cors = require("cors");
+const { errorHandler, notFoundHandler } = require("./error");
 
-// main application
 const app = express();
 
-// middleware
-app.use([morgan("dev"), cors(), express.json()]);
+app.use(require("./middleware"));
+app.use(require("./routes"));
 
-// route handling
-app.get("/health", (_req, res) => {
-  res.status(200).json({ message: "Success" });
-});
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 module.exports = app;

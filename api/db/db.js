@@ -72,7 +72,7 @@ class MyDB {
   /**
    * Update ticket by a given id
    * @param {string} ticketId - ticketId must be a string
-   * @param {{username: string, price:number}} ticketBody - username: string, price: number
+   * @param {{username: string, price:number}} ticketBody - ticketBody is a object
    */
   updateById(ticketId, ticketBody) {
     const ticket = this.findById(ticketId);
