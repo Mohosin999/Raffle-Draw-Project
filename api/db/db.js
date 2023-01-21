@@ -103,19 +103,37 @@ class MyDB {
     }
   }
 
+  deleteByUsername(username) {
+    // to get index
+    const index = this.tickets.findIndex(
+      /**
+       *@param {Ticket} ticket
+       */
+      (ticket) => ticket.username === username
+    );
+
+    if (index !== -1) {
+      this.tickets.splice(index, 1);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   /**
    * Find winner
    * @param {number} winnerCount - winnerCount must be a number
    */
+
   draw(winnerCount) {
     const winnerIndexes = new Array(winnerCount);
 
     let index = 0;
     while (index < winnerCount) {
       // winnerIndex gives only index like 0 or 1 or 2 ...
-      const winnerIndex = Math.floor(Math.random() * this.tickets.length);
+      let winnerIndex = Math.floor(Math.random() * this.tickets.length);
       if (!winnerIndexes.includes(winnerIndex)) {
-        winnerIndexes[index++];
+        winnerIndexes[index++] = winnerIndex;
         continue;
       }
     }
