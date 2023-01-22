@@ -9,6 +9,7 @@ class MyDB {
    * Create and save a new ticket
    * @param {string} username - username must be a string
    * @param {number} price - price must be a number
+   * @returns {Ticket}
    */
   create(username, price) {
     const ticket = new Ticket(username, price);
@@ -21,6 +22,7 @@ class MyDB {
    * @param {string} username - username must be a string
    * @param {number} price - price must be a number
    * @param {number} quantity - quantity must be a number
+   * @returns {Ticket[]}
    */
   bulkCreate(username, price, quantity) {
     const result = [];
@@ -34,6 +36,7 @@ class MyDB {
 
   /**
    * Returns all available tickets
+   * @returns {Ticket[]}
    */
   find() {
     return this.tickets;
@@ -42,6 +45,7 @@ class MyDB {
   /**
    * Find ticket by ticket id
    * @param {string} ticketId - ticketId must be a string
+   * @returns {Ticket}
    */
   findById(ticketId) {
     const ticket = this.tickets.find(
@@ -57,6 +61,7 @@ class MyDB {
   /**
    * Find ticket by a given user
    * @param {string} username - username must be a string
+   * @returns {Ticket[]}
    */
   findByUsername(username) {
     const tickets = this.tickets.filter(
@@ -73,6 +78,7 @@ class MyDB {
    * Update ticket by a given id
    * @param {string} ticketId - ticketId must be a string
    * @param {{username: string, price:number}} ticketBody - ticketBody is a object
+   * @returns {Ticket}
    */
   updateById(ticketId, ticketBody) {
     const ticket = this.findById(ticketId);
@@ -85,6 +91,7 @@ class MyDB {
   /**
    * Delete ticket by given id
    * @param {string} ticketId - ticketId must be string
+   * @returns {boolean}
    */
   deleteById(ticketId) {
     // to get index
@@ -103,26 +110,10 @@ class MyDB {
     }
   }
 
-  deleteByUsername(username) {
-    // to get index
-    const index = this.tickets.findIndex(
-      /**
-       *@param {Ticket} ticket
-       */
-      (ticket) => ticket.username === username
-    );
-
-    if (index !== -1) {
-      this.tickets.splice(index, 1);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   /**
    * Find winner
    * @param {number} winnerCount - winnerCount must be a number
+   * @returns {Ticket[]}
    */
 
   draw(winnerCount) {
