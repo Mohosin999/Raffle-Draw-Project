@@ -10,7 +10,7 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 8000;
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/raffle-draw-project")
+  .connect("mongodb://127.0.0.1:27017/raffle-draw")
   .then(() => {
     server.listen(PORT, () => {
       console.log(`Server is listening on PORT ${PORT}`);
