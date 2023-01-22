@@ -19,10 +19,19 @@
 
 const { Schema, model } = require("mongoose");
 
-const ticketSchema = new Schema({
-  username: String,
-  price: Number,
-});
+const ticketSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
 const Ticket = model("Ticket", ticketSchema);
 
