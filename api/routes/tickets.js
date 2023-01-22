@@ -114,17 +114,17 @@ router.post("/bulk", async (req, res, next) => {
 /**
  * draw
  */
-// router.get("/draw", async (req, res, next) => {
-//   try {
-//     const winnerCount = req.query.wc ?? 3;
-//     const winners = await Ticket.aggregate([
-//       { $sample: { size: winnerCount } },
-//     ]);
-//     res.status(200).json(winners);
-//   } catch (e) {
-//     console.log(next(e.message));
-//   }
-// });
+router.get("/draw", async (req, res, next) => {
+  try {
+    const winnerCount = parseInt(req.query.wc) || 3;
+    const winners = await Ticket.aggregate([
+      { $sample: { size: winnerCount } },
+    ]);
+    res.status(200).json(winners);
+  } catch (e) {
+    console.log(next(e.message));
+  }
+});
 
 /**
  * show all tickets
