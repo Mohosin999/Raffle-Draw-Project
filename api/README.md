@@ -1,12 +1,19 @@
 # Raffle Draw Project
 
 # Description:
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5d66f64800c56a36fcda4f7d5bbf94e577eb2b87
 What can be done in this application?
 
 - You will find a single ticket using the given ID
 - You will update a single ticket using the given ID
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5d66f64800c56a36fcda4f7d5bbf94e577eb2b87
 # Requirement:
 
 - sell lottery ticket
