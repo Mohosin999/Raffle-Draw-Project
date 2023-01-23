@@ -30,9 +30,11 @@ Remember that, "yarn" type inside api and frontend differently.
 So all the installation processes step by step together:
 - git clone https://github.com/Mohosin999/Raffle-Draw-Project.git
 - cd Raffle-Draw-Project
+
 If you want to work inside fronten, then type:
 - cd frontend
 - yarn
+
 or, if you want to work inside api, then type:
 - cd api
 - yarn
