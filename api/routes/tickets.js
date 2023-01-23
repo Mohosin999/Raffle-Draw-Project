@@ -17,6 +17,8 @@ router.get("/t/:ticketId", async (req, res, next) => {
   }
 });
 
+console.log(akash);
+
 /**
  * update ticket by given id
  */
