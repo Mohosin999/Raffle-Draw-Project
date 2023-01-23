@@ -25,7 +25,7 @@ Go to your terminal and type:
 - git clone https://github.com/Mohosin999/Raffle-Draw-Project.git
 
 After that, go to inside this project file using "cd ..." (... means this project file name) and type "yarn". 
-Remember that, "yarn" type inside api and frontend differently.
+Remember that, "yarn" type both inside api and frontend differently.
 
 So all the installation processes step by step together:
 - git clone https://github.com/Mohosin999/Raffle-Draw-Project.git
