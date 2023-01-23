@@ -1,3 +1,12 @@
+# Raffle Draw Project
+
+# Description:
+What can be done in this application?
+
+- You will find a single ticket using the given ID
+- You will update a single ticket using the given ID
+
+
 # Requirement:
 
 - sell lottery ticket
