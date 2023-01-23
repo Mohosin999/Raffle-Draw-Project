@@ -13,7 +13,7 @@ What can be done in this application?
 - A single ticket can be deleted using username
 
 - A ticket can be created by providing name and price
-- Multiple ticket for a single user can be created by providing name and price
+- Multiple tickets for a single user can be created by providing name and price
 
 - The winner will be determined through the lottery draw
 - Show all tickets
