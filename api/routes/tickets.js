@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Ticket = require("../models/Ticket");
 
 /**
- * find ticket by given id
+ * find a single ticket by the given id
  */
 router.get("/t/:ticketId", async (req, res, next) => {
   const ticketId = req.params.ticketId;
@@ -18,7 +18,23 @@ router.get("/t/:ticketId", async (req, res, next) => {
 });
 
 /**
- * update ticket by given id
+ * find a single ticket by the given username
+ */
+router.get("/u/:username", async (req, res, next) => {
+  const username = req.params.username;
+  try {
+    const ticket = await Ticket.findOne({ username });
+    if (!ticket) {
+      return res.status(404).json({ message: "Ticket not found" });
+    }
+    res.status(200).json({ ticket });
+  } catch (e) {
+    console.log(next(e.message));
+  }
+});
+
+/**
+ * update ticket by the given id
  */
 router.patch("/t/:ticketId", async (req, res, next) => {
   const ticketId = req.params.ticketId;
@@ -36,7 +52,29 @@ router.patch("/t/:ticketId", async (req, res, next) => {
 });
 
 /**
- * delete ticket by given id
+ * update ticket by the given username
+ */
+router.patch("/u/:username", async (req, res, next) => {
+  const username = req.params.username;
+  try {
+    const updatedTicket = await Ticket.findOneAndUpdate(
+      { username },
+      req.body,
+      {
+        new: true,
+      }
+    );
+    if (!updatedTicket) {
+      return res.status(404).json({ message: "Ticket not found" });
+    }
+    res.status(200).json({ message: "Updated Successfully", updatedTicket });
+  } catch (e) {
+    console.log(next(e.message));
+  }
+});
+
+/**
+ * delete ticket by the given id
  */
 router.delete("/t/:ticketId", async (req, res, next) => {
   const ticketId = req.params.ticketId;
@@ -52,7 +90,7 @@ router.delete("/t/:ticketId", async (req, res, next) => {
 });
 
 /**
- * delete ticket by username
+ * delete ticket by the username
  */
 router.delete("/u/:username", async (req, res, next) => {
   const username = req.params.username;
@@ -62,22 +100,6 @@ router.delete("/u/:username", async (req, res, next) => {
       return res.status(404).json({ message: "Ticket not found" });
     }
     res.status(203).json({ message: "Deleted Successfully" });
-  } catch (e) {
-    console.log(next(e.message));
-  }
-});
-
-/**
- * find ticket by username
- */
-router.get("/u/:username", async (req, res, next) => {
-  const username = req.params.username;
-  try {
-    const ticket = await Ticket.findOne({ username });
-    if (!ticket) {
-      return res.status(404).json({ message: "Ticket not found" });
-    }
-    res.status(200).json({ ticket });
   } catch (e) {
     console.log(next(e.message));
   }
