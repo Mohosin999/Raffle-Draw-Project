@@ -1,170 +1,67 @@
 const router = require("express").Router();
+const {
+  findById,
+  findByUsername,
+  updateById,
+  updateByUsername,
+  deleteById,
+  deleteByUsername,
+  create,
+  bulkCreate,
+  draw,
+  findAllTickets,
+} = require("../controller/tickets");
 const Ticket = require("../models/Ticket");
 
 /**
  * find a single ticket by the given id
  */
-router.get("/t/:ticketId", async (req, res, next) => {
-  const ticketId = req.params.ticketId;
-  try {
-    const ticket = await Ticket.findById(ticketId);
-    if (!ticket) {
-      return res.status(404).json({ message: "Ticket not found" });
-    }
-    res.status(200).json({ ticket });
-  } catch (e) {
-    console.log(next(e.message));
-  }
-});
+router.get("/t/:ticketId", findById);
 
 /**
  * find a single ticket by the given username
  */
-router.get("/u/:username", async (req, res, next) => {
-  const username = req.params.username;
-  try {
-    const ticket = await Ticket.findOne({ username });
-    if (!ticket) {
-      return res.status(404).json({ message: "Ticket not found" });
-    }
-    res.status(200).json({ ticket });
-  } catch (e) {
-    console.log(next(e.message));
-  }
-});
+router.get("/u/:username", findByUsername);
 
 /**
  * update ticket by the given id
  */
-router.patch("/t/:ticketId", async (req, res, next) => {
-  const ticketId = req.params.ticketId;
-  try {
-    const updatedTicket = await Ticket.findByIdAndUpdate(ticketId, req.body, {
-      new: true,
-    });
-    if (!updatedTicket) {
-      return res.status(404).json({ message: "Ticket not found" });
-    }
-    res.status(200).json({ message: "Updated Successfully", updatedTicket });
-  } catch (e) {
-    console.log(next(e.message));
-  }
-});
+router.patch("/t/:ticketId", updateById);
 
 /**
  * update ticket by the given username
  */
-router.patch("/u/:username", async (req, res, next) => {
-  const username = req.params.username;
-  try {
-    const updatedTicket = await Ticket.findOneAndUpdate(
-      { username },
-      req.body,
-      {
-        new: true,
-      }
-    );
-    if (!updatedTicket) {
-      return res.status(404).json({ message: "Ticket not found" });
-    }
-    res.status(200).json({ message: "Updated Successfully", updatedTicket });
-  } catch (e) {
-    console.log(next(e.message));
-  }
-});
+router.patch("/u/:username", updateByUsername);
 
 /**
  * delete ticket by the given id
  */
-router.delete("/t/:ticketId", async (req, res, next) => {
-  const ticketId = req.params.ticketId;
-  try {
-    const ticket = await Ticket.findByIdAndDelete(ticketId);
-    if (!ticket) {
-      return res.status(404).json({ message: "Ticket not found" });
-    }
-    res.status(203).json({ message: "Deleted Successfully" });
-  } catch (e) {
-    console.log(next(e.message));
-  }
-});
+router.delete("/t/:ticketId", deleteById);
 
 /**
  * delete ticket by the username
  */
-router.delete("/u/:username", async (req, res, next) => {
-  const username = req.params.username;
-  try {
-    const ticket = await Ticket.findOneAndDelete({ username });
-    if (!ticket) {
-      return res.status(404).json({ message: "Ticket not found" });
-    }
-    res.status(203).json({ message: "Deleted Successfully" });
-  } catch (e) {
-    console.log(next(e.message));
-  }
-});
+router.delete("/u/:username", deleteByUsername);
 
 /**
  * create a single ticket
  */
-router.post("/sell", async (req, res, next) => {
-  const { username, price } = req.body;
-  try {
-    const ticket = new Ticket({ username, price });
-    await ticket.save();
-    res.status(201).json({ message: "Created Successfully", ticket });
-  } catch (e) {
-    console.log(next(e.message));
-  }
-});
+router.post("/sell", create);
 
 /**
  * create multiple ticket for a single user
  */
-router.post("/bulk", async (req, res, next) => {
-  const { username, price, quantity } = req.body;
-  try {
-    const tickets = [];
-    for (let i = 0; i < quantity; i++) {
-      tickets.push({ username, price });
-    }
-    const result = await Ticket.insertMany(tickets);
-    if (!result) {
-      return res.status(404).json({ message: "Ticket not created" });
-    }
-    res.status(201).json({ message: "Created Successfully", result });
-  } catch (e) {
-    console.log(next(e.message));
-  }
-});
+router.post("/bulk", bulkCreate);
 
 /**
  * draw
  */
-router.get("/draw", async (_req, res, next) => {
-  try {
-    const winner = await Ticket.aggregate([{ $sample: { size: 1 } }]);
-    res.status(200).json(winner);
-  } catch (e) {
-    console.log(next(e.message));
-  }
-});
+router.get("/draw", draw);
 
 /**
  * show all tickets
  */
-router.get("/", async (_req, res, next) => {
-  try {
-    const tickets = await Ticket.find();
-    if (!tickets) {
-      return res.status(404).json({ message: "Tickets not found" });
-    }
-    res.status(200).json({ tickets });
-  } catch (e) {
-    console.log(next(e.message));
-  }
-});
+router.get("/", findAllTickets);
 
 module.exports = router;
 
