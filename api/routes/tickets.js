@@ -41,7 +41,10 @@ router.patch("/t/:ticketId", async (req, res, next) => {
 router.delete("/t/:ticketId", async (req, res, next) => {
   const ticketId = req.params.ticketId;
   try {
-    await Ticket.findByIdAndDelete(ticketId);
+    const ticket = await Ticket.findByIdAndDelete(ticketId);
+    if (!ticket) {
+      return res.status(404).json({ message: "Ticket not found" });
+    }
     res.status(203).json({ message: "Deleted Successfully" });
   } catch (e) {
     console.log(next(e.message));
@@ -54,7 +57,10 @@ router.delete("/t/:ticketId", async (req, res, next) => {
 router.delete("/u/:username", async (req, res, next) => {
   const username = req.params.username;
   try {
-    await Ticket.findOneAndDelete({ username });
+    const ticket = await Ticket.findOneAndDelete({ username });
+    if (!ticket) {
+      return res.status(404).json({ message: "Ticket not found" });
+    }
     res.status(203).json({ message: "Deleted Successfully" });
   } catch (e) {
     console.log(next(e.message));
@@ -114,13 +120,10 @@ router.post("/bulk", async (req, res, next) => {
 /**
  * draw
  */
-router.get("/draw", async (req, res, next) => {
-  const winnerCount = parseInt(req.query.wc) || 3;
+router.get("/draw", async (_req, res, next) => {
   try {
-    const winners = await Ticket.aggregate([
-      { $sample: { size: winnerCount } },
-    ]);
-    res.status(200).json(winners);
+    const winner = await Ticket.aggregate([{ $sample: { size: 1 } }]);
+    res.status(200).json(winner);
   } catch (e) {
     console.log(next(e.message));
   }
