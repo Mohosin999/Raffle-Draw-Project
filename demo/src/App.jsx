@@ -1,10 +1,12 @@
 import React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const App = () => {
   return (
-    <div>
+    <>
+      <CssBaseline />
       <h3>Problems for Yarn Create Vite</h3>
-    </div>
+    </>
   );
 };
 
