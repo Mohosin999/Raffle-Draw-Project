@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
+import TicketSell from "./components/ticket-sell";
 
 const App = () => {
+  const [tickets, setTickets] = useState([]);
+  console.log(tickets);
+
+  const handleCreateTicket = (ticket) => {
+    setTickets([...tickets, ticket]);
+  };
+
   return (
     <>
       <CssBaseline />
-      <h3>Problems for Yarn Create Vite</h3>
+      <TicketSell sellTicket={handleCreateTicket} />
     </>
   );
 };
